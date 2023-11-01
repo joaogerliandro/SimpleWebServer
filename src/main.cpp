@@ -69,8 +69,18 @@ int main()
             boost::system::error_code ignored_error;
 
             boost::asio::streambuf request;
-            boost::asio::read_until(*socket, request, "\r\n\r\n");
 
+            try
+            {
+                boost::asio::read_until(*socket, request, "\r\n\r\n");
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+                socket->close();
+                continue;
+            }
+            
             std::istream request_stream(&request);
             std::string request_line;
             std::getline(request_stream, request_line);
