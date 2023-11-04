@@ -76,7 +76,6 @@ int main()
             }
             catch(const std::exception& e)
             {
-                std::cerr << e.what() << '\n';
                 socket->close();
                 continue;
             }
