@@ -38,7 +38,8 @@ std::string map_content_type(const std::string& file_extension)
 
 std::string generate_response(const std::string& filename) {
     std::ifstream file(filename, std::ios::binary);
-    if (!file.is_open()) {
+    if (!file.is_open()) 
+    {
         return "HTTP/1.1 404 Not Found\r\n\r\nFile Not Found";
     }
 
