@@ -29,17 +29,39 @@ set(PROJECT_SOURCES
 
 find_package(Boost REQUIRED)
 
-include_directories(${Boost_INCLUDE_DIRS})
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+else()
+    message(FATAL_ERROR "Boost Library not found !")
+endif()
+
+if(WIN32)
+    include_directories(${PROJECT_SOURCE_DIR}/mysql-connector/include/jdbc)
+    link_directories(${PROJECT_SOURCE_DIR}/mysql-connector/lib64)
+    link_directories(${PROJECT_SOURCE_DIR}/mysql-connector/lib64/vs14)
+else()
+    find_package(mysql-connector-c++ REQUIRED)
+endif()
 
 add_executable(
     ${PROJECT_NAME}
     ${PROJECT_SOURCES}
 )
 
+# Link Boost Libraries
 target_link_libraries(
     ${PROJECT_NAME}
     PRIVATE
     ${Boost_LIBRARIES}
+)
+
+# Link MySQL Libraries
+target_link_libraries(
+    ${PROJECT_NAME}
+    PRIVATE
+    mysqlcppconn
+    libssl
+    libcrypto
 )
 
 if(WIN32)
