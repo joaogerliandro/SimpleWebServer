@@ -9,6 +9,8 @@ int main()
         boost::asio::io_service io_service;
         tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 80));
 
+        WebServer::RequestHandler request_handler;
+
         while (true)
         {
             tcp::socket *socket = new tcp::socket(io_service);
@@ -31,7 +33,7 @@ int main()
             std::string request_line;
             std::getline(request_stream, request_line);
 
-            WebServer::RequestHandler::process_request(request_line, socket);
+            request_handler.process_request(request_line, socket);
 
             socket->close();
         }

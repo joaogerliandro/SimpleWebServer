@@ -1,6 +1,6 @@
 #pragma once
 
-#include <common.h>
+#include <config.h>
 
 using boost::asio::ip::tcp;
 
@@ -9,7 +9,14 @@ namespace WebServer
     class RequestHandler
     {
         public:
-            static void process_request(const std::string& request, tcp::socket *socket)
+            RequestHandler() 
+            {
+                web_server_config = new Util::Config();
+
+                //web_server_config->connect_to_database();
+            }
+
+            void process_request(const std::string& request, tcp::socket *socket)
             {
                 boost::system::error_code ignored_error;
 
@@ -32,7 +39,9 @@ namespace WebServer
             }
 
         private:
-            static std::string generate_response(const std::string& filename) 
+            Util::Config *web_server_config;
+
+            std::string generate_response(const std::string& filename) 
             {
                 std::ifstream file(filename, std::ios::binary);
                 if (!file.is_open()) 
@@ -51,7 +60,7 @@ namespace WebServer
                 return response;
             }
 
-            static std::string map_content_type(const std::string& file_extension) 
+            std::string map_content_type(const std::string& file_extension) 
             {
                 if (file_extension == "html") 
                 {

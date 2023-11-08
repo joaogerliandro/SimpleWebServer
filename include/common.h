@@ -9,4 +9,5 @@
 #include <boost/asio.hpp>
 
 // MySQL
-#include <mysql_driver.h>
+#include <cppconn/driver.h>
+#include <cppconn/connection.h>
