@@ -39,9 +39,9 @@ namespace Util
                 con_factory.connect(db_host, db_name, db_username, db_password);
             }
 
-            void /* sql::Connection* */ get_connection()
+            boost::mysql::tcp_ssl_connection* get_connection()
             {
-                // return con_factory.get_connection();
+                return con_factory.get_connection();
             }
 
             void disconnect_to_database()
