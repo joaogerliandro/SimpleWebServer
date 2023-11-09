@@ -11,11 +11,11 @@ namespace Database
         public:
             void connect(std::string hostname, std::string database, std::string username, std::string password)
             {
-                connect(hostname, username, password);
-                change_database(database);
+                //connect(hostname, username, password);
+                //change_database(database);
             }
 
-            void change_database(std::string database)
+            /*void change_database(std::string database)
             {
                 try
                 {
@@ -31,26 +31,26 @@ namespace Database
                               << ", SQLState: "         << ex.getSQLState()
                               << " )"                   << std::endl;
                 }
-            }
+            }*/
 
-            sql::Connection* get_connection()
+            void /* sql::Connection* */ get_connection()
             {
-                if(con != nullptr)
+                /*if(con != nullptr)
                     return con;
                 else
-                    std::cout << "[WARNING]: Could not return a connection. A connection with host server is needed first !" << std::endl;
+                    std::cout << "[WARNING]: Could not return a connection. A connection with host server is needed first !" << std::endl;*/
             }
 
             void disconnect()
             {
-                delete con;
+                //delete con;
             }
 
         private:
-            sql::Driver *driver;
-            sql::Connection *con;
+            //sql::Driver *driver;
+            //sql::Connection *con;
 
-            void connect(std::string hostname, std::string username, std::string password)
+            /*void connect(std::string hostname, std::string username, std::string password)
             {
                 try
                 {
@@ -64,6 +64,6 @@ namespace Database
                               << ", SQLState: "         << ex.getSQLState()
                               << " )"                   << std::endl;
                 }
-            }
+            }*/
     };
 }

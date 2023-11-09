@@ -7,7 +7,4 @@
 
 // Boost
 #include <boost/asio.hpp>
-
-// MySQL
-#include <cppconn/driver.h>
-#include <cppconn/connection.h>
+#include <boost/mysql/connection.hpp>

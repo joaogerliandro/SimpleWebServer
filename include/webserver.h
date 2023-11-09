@@ -13,7 +13,7 @@ namespace WebServer
             {
                 web_server_config = new Util::Config();
 
-                //web_server_config->connect_to_database();
+                web_server_config->connect_to_database();
             }
 
             void process_request(const std::string& request, tcp::socket *socket)

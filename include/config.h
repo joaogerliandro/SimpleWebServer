@@ -39,9 +39,9 @@ namespace Util
                 con_factory.connect(db_host, db_name, db_username, db_password);
             }
 
-            sql::Connection* get_connection()
+            void /* sql::Connection* */ get_connection()
             {
-                return con_factory.get_connection();
+                // return con_factory.get_connection();
             }
 
             void disconnect_to_database()
