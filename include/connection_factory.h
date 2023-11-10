@@ -31,19 +31,20 @@ namespace Database
                 con->query(query, result);
 
                 int32_t row_index = 0;
+                std::string field_str = "";
                 
                 for(boost::mysql::row_view row : result.rows())
                 {
-                    std::string field_str = "";
-
-                    for(boost::mysql::field_view field : row)
-                    {
-                        // Get the field string
-                    }
-
                     row_index++;
 
+                    for(boost::mysql::field_view field : row.as_vector())
+                    {
+                        field_str += (std::string(" ") + process_field(field));
+                    }
+
                     std::cout << "Row #" << row_index << " -" << field_str << std::endl;
+
+                    field_str = "";
                 }
             }
 
@@ -63,5 +64,50 @@ namespace Database
 
         private:
             boost::mysql::tcp_ssl_connection *con;
+
+            std::string process_field(boost::mysql::field_view field)
+            {
+                std::string result = "";
+
+                if(field.is_null())
+                {
+                    result = std::string("NULL");
+                }
+                if(field.is_int64() || field.is_uint64())
+                {
+                    if(field.is_int64())
+                        result = std::to_string(field.get_int64());
+                    else
+                        result = std::to_string(field.get_uint64());
+                }
+                else if(field.is_string())
+                {
+                    result = std::string(field.get_string().data());
+                }
+                else if(field.is_double() || field.is_float())
+                {
+                    if(field.is_double())
+                        result = std::to_string(field.get_double());
+                    else
+                        result = std::to_string(field.get_float());
+                }
+                else if(field.is_date() || field.is_datetime())
+                {
+                    if(field.is_date())
+                    {
+                        boost::mysql::date date = field.get_date();
+                        result = std::to_string(date.day()) + "/" + std::to_string(date.month()) + "/" + std::to_string(date.year());
+                    }
+                    else
+                    {
+                        boost::mysql::datetime datetime = field.get_datetime();
+                        result = std::to_string(datetime.day()) + "/" + std::to_string(datetime.month()) + "/" + std::to_string(datetime.year())
+                        + " - " + std::to_string(datetime.hour()) + ":" + std::to_string(datetime.minute()) 
+                        + ":" + std::to_string(datetime.second()) + std::to_string(datetime.microsecond());
+                    }
+                }
+
+                return result;
+            }
     };
 }
