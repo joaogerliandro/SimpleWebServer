@@ -9,7 +9,7 @@ int main()
         boost::asio::io_service io_service;
         tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 80));
 
-        WebServer::RequestHandler request_handler;
+        WebServer::RequestHandler *request_handler = new WebServer::RequestHandler();
 
         while (true)
         {
@@ -33,10 +33,12 @@ int main()
             std::string request_line;
             std::getline(request_stream, request_line);
 
-            request_handler.process_request(request_line, socket);
+            request_handler->process_request(request_line, socket);
 
             socket->close();
         }
+
+        delete request_handler;
     }
     catch (std::exception &e)
     {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <config.h>
+#include <entities.h>
 
 using boost::asio::ip::tcp;
 
@@ -14,6 +15,8 @@ namespace WebServer
                 web_server_config = new Util::Config();
 
                 web_server_config->connect_to_database();
+
+                user_dao = new Database::DAO::UserDAO(web_server_config->get_connection_factory());
             }
 
             void process_request(const std::string& request, tcp::socket *socket)
@@ -40,6 +43,7 @@ namespace WebServer
 
         private:
             Util::Config *web_server_config;
+            Database::DAO::UserDAO *user_dao;
 
             std::string generate_response(const std::string& filename) 
             {

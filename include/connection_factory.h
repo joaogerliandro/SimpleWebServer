@@ -24,28 +24,6 @@ namespace Database
                 boost::mysql::handshake_params params(username, password, database);
 
                 con->connect(*endpoints.begin(), params);
-
-                std::string query = "SELECT * FROM User";
-                boost::mysql::results result;
-
-                con->query(query, result);
-
-                int32_t row_index = 0;
-                std::string field_str = "";
-                
-                for(boost::mysql::row_view row : result.rows())
-                {
-                    row_index++;
-
-                    for(boost::mysql::field_view field : row.as_vector())
-                    {
-                        field_str += (std::string(" ") + process_field(field));
-                    }
-
-                    std::cout << "Row #" << row_index << " -" << field_str << std::endl;
-
-                    field_str = "";
-                }
             }
 
             boost::mysql::tcp_ssl_connection* get_connection()
@@ -54,6 +32,29 @@ namespace Database
                     return con;
                 else
                     std::cout << "[WARNING]: Could not return a connection. A connection with host server is needed first !" << std::endl;
+            }
+
+            std::vector<std::string> execute_query(std::string query)
+            {
+                std::vector<std::string> query_result;
+
+                boost::mysql::results result_set;
+
+                con->query(query, result_set);
+                
+                for(boost::mysql::row_view row : result_set.rows())
+                {
+                    std::string field_str = "";
+
+                    for(boost::mysql::field_view field : row.as_vector())
+                    {
+                        field_str += (std::string(" ") + process_field(field));
+                    }
+
+                    query_result.push_back(field_str);
+                }
+
+                return query_result;
             }
 
             void disconnect()

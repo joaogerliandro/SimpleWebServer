@@ -32,21 +32,23 @@ namespace Util
                 }
 
                 config_file.close();
+
+                setup_config();
             }
 
             void connect_to_database()
             {
-                con_factory.connect(db_host, db_name, db_username, db_password);
+                con_factory->connect(db_host, db_name, db_username, db_password);
             }
 
-            boost::mysql::tcp_ssl_connection* get_connection()
+            Database::ConnectionFactory* get_connection_factory()
             {
-                return con_factory.get_connection();
+                return con_factory;
             }
 
             void disconnect_to_database()
             {
-                con_factory.disconnect();
+                con_factory->disconnect();
             }
 
         private:
@@ -55,7 +57,12 @@ namespace Util
             std::string db_username;
             std::string db_password;
 
-            Database::ConnectionFactory con_factory;
+            Database::ConnectionFactory *con_factory;
+
+            void setup_config()
+            {
+                con_factory = new Database::ConnectionFactory();
+            }
 
             void load_default_setting()
             {
