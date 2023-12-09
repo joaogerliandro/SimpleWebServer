@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./css/modalProduct.css">
+  <title>Modal de Pedido</title>
+</head>
+<body>
+
+  <!-- Botão para abrir o modal -->
+  <button onclick="abrirModal()">Abrir Modal</button>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div id="modal-content" class="modal-content">
+      <span class="fechar-modal" onclick="fecharModal()">&times;</span>
+
+      <!-- Campos do Modal -->
+      <label for="nomeProduto">Nome do Produto:</label>
+      <input type="text" id="nomeProduto" name="nomeProduto" placeholder="Digite o nome do produto">
+
+      <label for="valorUnitario">Valor Unitário:</label>
+      <input type="number" id="valorUnitario" name="valorUnitario" placeholder="Digite o valor unitário">
+
+      <label for="valorTotal">Valor Total do Pedido:</label>
+      <span id="valorTotal">0.00</span>
+
+      <!-- Botões do Modal -->
+      <div class="botoes-modal">
+        <button onclick="enviarPedido()">Enviar</button>
+        <button onclick="fecharModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/modal.js"></script>
+</body>
+</html>

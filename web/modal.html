@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./css/modal.css">
+  <title>Modal Personalizado</title>
+</head>
+<body>
+
+  <!-- Botões de exemplo para acionar os modais -->
+  <div class="button-container">
+    <button class="button button-success" onclick="mostrarModal('success', 'Operação realizada com sucesso.')">Sucesso</button>
+    <button class="button button-error" onclick="mostrarModal('error', 'Ocorreu um erro durante a operação.')">Erro</button>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div id="modal-content" class="modal-content">
+      
+      <div id="modal-mensagem" class="modal-mensagem"></div>
+    </div>
+  </div>
+
+  <script src="./js/index.js"></script>
+</body>
+</html>

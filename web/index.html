@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/modal.css">
+  <title>Cadastro de Pedidos - Lanchonete</title>
+</head>
+<body>
+
+  <div class="container">
+    <form id="pedidoForm">
+      <h2>Cadastro de Pedidos - Lanchonete</h2>
+
+      <label for="cliente">Nome do Cliente:</label>
+      <input type="text" id="cliente" name="cliente" required>
+
+      <label for="taxNumber">CPF:</label>
+      <input type="text" id="taxnumber" name="taxNumber" required>
+
+      <label for="endereco">Endereço de Entrega:</label>
+      <textarea id="endereco" name="endereco" required></textarea>
+
+      <label for="produto">Selecione um Produto:</label>
+      <select id="produto" name="produto" onchange="updateProductValue()" required>
+        <option value="null">Selecione</option>
+        <option value="hamburguer" data-preco="10">Hambúrguer</option>
+        <option value="batata" data-preco="5">Batata Frita</option>
+        <option value="refrigerante" data-preco="3">Refrigerante</option>
+        <!-- Adicione mais opções conforme necessário -->
+      </select>
+
+      <!-- Label para exibir o valor do produto -->
+      <label for="valorProduto">Valor do Produto:</label>
+      <span id="valorProduto"></span>
+
+      <label for="quantidade">Quantidade:</label>
+      <input type="number" id="quantidade" onchange="updateProductValue()" name="quantidade" required>
+
+      <label for="valorTotalPedido">Valor Total do Pedido:</label>
+      <span id="valorTotalPedido"></span>
+
+      <!-- Botão com o tipo "button" -->
+      <button type="button" onclick="enviarPedido()">Enviar Pedido</button>
+      <button type="button" onclick="getOrdersServer()" class="button button-cancel">Visualizar pedido</button>
+
+    </form>
+  </div>
+
+  <div id="conteudo-da-pagina">
+    <!-- Modal -->
+    <div id="modal" class="modal">
+      <div id="modal-content" class="modal-content">
+        <span class="fechar-modal" onclick="fecharModal()">&times;</span>
+        <div id="modal-mensagem" class="modal-mensagem"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/index.js"></script>
+ 
+</body>
+</html>

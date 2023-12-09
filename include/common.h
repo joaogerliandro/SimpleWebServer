@@ -8,4 +8,8 @@
 
 // Boost
 #include <boost/asio.hpp>
-#include <boost/mysql.hpp>
+#include <boost/beast/core.hpp>
+#include <boost/beast/http.hpp>
+
+// Json
+#include <nlohmann/json.hpp>

@@ -1,41 +1,29 @@
 #include <webserver.h>
 
-using boost::asio::ip::tcp;
+namespace beast = boost::beast;    
+namespace http = beast::http;
+namespace net = boost::asio;
+using tcp = net::ip::tcp;
 
 int main()
 {
     try
     {
-        boost::asio::io_service io_service;
-        tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 80));
+        net::io_context io_context;
+        tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), 80));
 
         WebServer::RequestHandler *request_handler = new WebServer::RequestHandler();
 
         while (true)
         {
-            tcp::socket *socket = new tcp::socket(io_service);
+            tcp::socket socket(io_context);
+            acceptor.accept(socket);
 
-            acceptor.accept(*socket);
+            beast::flat_buffer buffer;
+            http::request<http::string_body> request;
+            http::read(socket, buffer, request);
 
-            boost::asio::streambuf request;
-
-            try
-            {
-                boost::asio::read_until(*socket, request, "\r\n\r\n");
-            }
-            catch(const std::exception& e)
-            {
-                socket->close();
-                continue;
-            }
-            
-            std::istream request_stream(&request);
-            std::string request_line;
-            std::getline(request_stream, request_line);
-
-            request_handler->process_request(request_line, socket);
-
-            socket->close();
+            request_handler->process_request(request, socket);
         }
 
         delete request_handler;

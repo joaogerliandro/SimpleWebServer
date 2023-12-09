@@ -27,6 +27,7 @@ set(PROJECT_SOURCES
         ${WRAPPERS}
 )
 
+find_package(nlohmann_json REQUIRED)
 find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
 find_package(OpenSSL REQUIRED)
@@ -41,6 +42,7 @@ add_executable(
 target_link_libraries(
     ${PROJECT_NAME}
     PRIVATE
+    nlohmann_json::nlohmann_json
     ${Boost_LIBRARIES}
     Threads::Threads
     OpenSSL::Crypto 
