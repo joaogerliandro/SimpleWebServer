@@ -13,3 +13,6 @@
 
 // Json
 #include <nlohmann/json.hpp>
+
+// ZeroMQ
+#include <zmq.hpp>

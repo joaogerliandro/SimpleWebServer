@@ -27,12 +27,19 @@ set(PROJECT_SOURCES
         ${WRAPPERS}
 )
 
-find_package(nlohmann_json REQUIRED)
 find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
 find_package(OpenSSL REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIRS})
+
+find_package(ZeroMQ REQUIRED)
+
+include_directories(${ZeroMQ_INCLUDE_DIRS})
+
+find_package(cppzmq REQUIRED)
+
+find_package(nlohmann_json REQUIRED)
 
 add_executable(
     ${PROJECT_NAME}
@@ -47,6 +54,8 @@ target_link_libraries(
     Threads::Threads
     OpenSSL::Crypto 
     OpenSSL::SSL
+    libzmq
+    cppzmq
 )
 
 if(WIN32)

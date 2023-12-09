@@ -33,17 +33,25 @@ namespace WebServer
                 }
                 else if (req.method() == boost::beast::http::verb::post) 
                 {
-                    std::string post_data = req.body();  // Extrai os dados do corpo da solicitação POST
+                    std::string post_data = req.body();  
 
-                    // Aqui você pode processar os dados POST conforme necessário
-                    std::cout << "Dados POST recebidos: " << post_data << std::endl;
+                    zmq::context_t context{1};
 
-                    std::string post_response = "Solicitação POST recebida com sucesso!";
+                    zmq::socket_t zmq_socket{context, zmq::socket_type::req};
+                    zmq_socket.connect("tcp://45.231.133.45:4444");
+
+                    zmq_socket.send(zmq::buffer(post_data), zmq::send_flags::none);
+
+                    zmq::message_t reply{};
+                    zmq_socket.recv(reply, zmq::recv_flags::none);
+
+                    json post_response = json::parse(reply.to_string());
+
                     boost::beast::http::response<boost::beast::http::string_body> http_response{boost::beast::http::status::ok, req.version()};
                     http_response.set(boost::beast::http::field::server, "Boost Beast Server");
                     http_response.set(boost::beast::http::field::content_type, "text/plain");
                     http_response.keep_alive(req.keep_alive());
-                    http_response.body() = post_response;
+                    http_response.body() = post_response.dump();
                     http_response.prepare_payload();
 
                     boost::beast::http::write(socket, http_response);

@@ -79,21 +79,20 @@ function createObject(serviceType, name, product, quantity, valueProduct, totalV
     console.log(serviceType)
     switch (serviceType) {
         case 0:
-            return body = {
+            return Body = {
                 product: product,
                 valueProduct: valueProduct
             }
             
             break;
         case 1:
-            return body = {
-                name: name,
-                product: product,
-                quantity: quantity,
-                valueProduct: valueProduct,
-                totalValue: totalValue, 
-                address: address, 
-                taxNumber: taxNumber
+            return Body = {
+                ClientName: name,
+                TaxNumber: taxNumber,
+                Product: product,
+                Amount: quantity,
+                TotalValue: totalValue, 
+                Address: address, 
             }
     
         default:
@@ -101,13 +100,13 @@ function createObject(serviceType, name, product, quantity, valueProduct, totalV
     }
 }
 
-function createJSON(serviceType, remoteEndPoint, body){
+function createJSON(serviceType, remoteEndPoint, Body){
 
-    const head = {
-        serviceType: serviceType,
-        RemoteEndPoint: remoteEndPoint
+    const Head = {
+        ServiceType: serviceType,
+        RemoteEndpoint: remoteEndPoint
     }
-    const order = {head, body}
+    const order = {Head, Body}
     console.log(order)
 let jsonString = JSON.stringify(order);
 return jsonString;
