@@ -11,7 +11,7 @@ function enviarPedido(){
 
     const name = document.getElementById('cliente').value.trim().length <= 0 ? null : document.getElementById('cliente').value.trim();
     const product = document.getElementById('produto').value;
-    const quantity = document.getElementById('quantidade').value.trim().length <= 0 ? null : document.getElementById('quantidade').value.trim();
+    const quantity = document.getElementById('quantidade').value.trim().length <= 0 ? null : parseInt(document.getElementById('quantidade').value.trim());
     const address = document.getElementById('endereco').value.trim().length <= 0 ? null : document.getElementById('endereco').value.trim();
     const taxNumber = document.getElementById('taxnumber').value.trim().length <= 0 ? null : document.getElementById('taxnumber').value.trim();
     const valueProduct = parseInt(document.getElementById('valorProduto').innerText.replace(/[/\D]/g, ''));
@@ -20,14 +20,8 @@ function enviarPedido(){
     if(name !== null  && product !== null && quantity !== null && address !== null && valueProduct !== null && taxNumber != null){
         if(validate(name, product, quantity, valueProduct, totalValue, address, taxNumber)){
             const serviceType = {
-                getProductList: 0,
-                createOrder: 1,
-                getOrderList: 2,
-                confirmOrder: 3,
-                cancelOrder: 4,
-                processOrder: 5,
-                updateOrderStatus: 6,
-                saveLog: 7
+                createOrder: 0,
+                getOrderList: 1
             }
             const body = createObject(serviceType.createOrder, name, product, quantity, valueProduct, totalValue, address, taxNumber);
             let orderJSON = createJSON(serviceType.createOrder, 'endPoint', body);
