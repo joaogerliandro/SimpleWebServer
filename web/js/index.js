@@ -77,26 +77,13 @@ function validate(name, product, quantity, valueProduct, totalValue, address, ta
 
 function createObject(serviceType, name, product, quantity, valueProduct, totalValue, address, taxNumber){
     console.log(serviceType)
-    switch (serviceType) {
-        case 0:
-            return Body = {
-                product: product,
-                valueProduct: valueProduct
-            }
-            
-            break;
-        case 1:
-            return Body = {
-                ClientName: name,
-                TaxNumber: taxNumber,
-                Product: product,
-                Amount: quantity,
-                TotalValue: totalValue, 
-                Address: address, 
-            }
-    
-        default:
-            throw new Error("ServiceType inválido")
+    return Body = {
+        ClientName: name,
+        TaxNumber: taxNumber,
+        Product: product,
+        Amount: quantity,
+        TotalValue: totalValue, 
+        Address: address, 
     }
 }
 

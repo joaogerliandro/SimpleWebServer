@@ -31,6 +31,7 @@ namespace WebServer
 
                     boost::beast::http::write(socket, response);
                 }
+
                 else if (req.method() == boost::beast::http::verb::post) 
                 {
                     std::string post_data = req.body();  
